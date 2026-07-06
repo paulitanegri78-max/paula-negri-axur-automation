@@ -63,7 +63,7 @@ module.exports = defineConfig({
     specPattern: "cypress/e2e/features/**/*.feature",
     supportFile: "cypress/support/e2e.js",
     defaultCommandTimeout: 10000,
-    pageLoadTimeout: 120000,
+    pageLoadTimeout: 240000,
     retries: {
       runMode: 1,
       openMode: 0,

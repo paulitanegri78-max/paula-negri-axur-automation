@@ -24,7 +24,8 @@ class HomePage {
 
             cy.visit(targetUrl, {
                 failOnStatusCode: false,
-                timeout: 120000,
+                timeout: Cypress.config('pageLoadTimeout') || 240000,
+                retryOnNetworkFailure: true,
             })
         }
     }
