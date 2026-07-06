@@ -1,0 +1,28 @@
+{
+  "scripts": {
+    "clean:e2e:artifacts": "node -e \"const fs=require('fs');['cypress/screenshots','cypress/videos','cypress/reports'].forEach(p=>{try{fs.rmSync(p,{recursive:true,force:true});}catch(e){console.warn('skip clean',p,e.code||e.message);}});\"",
+    "pretest:e2e:edge": "npm run clean:e2e:artifacts",
+    "pretest:e2e:smoke": "npm run clean:e2e:artifacts",
+    "pretest:e2e:smoke:headed": "npm run clean:e2e:artifacts",
+    "pretest:e2e:regression": "npm run clean:e2e:artifacts",
+    "pretest:e2e:smoke:headless": "npm run clean:e2e:artifacts",
+    "pretest:e2e:regression:headless": "npm run clean:e2e:artifacts",
+    "test:e2e:edge": "cypress run --browser edge --headed --spec \"cypress/e2e/features/**/*.feature\"",
+    "test:e2e:smoke": "cypress run --browser edge --headless --spec \"cypress/e2e/features/**/*.feature\" --env tags=\"@smoke\",TAGS=\"@smoke\"",
+    "test:e2e:smoke:headed": "cypress run --browser edge --headed --spec \"cypress/e2e/features/**/*.feature\" --env tags=\"@smoke\",TAGS=\"@smoke\"",
+    "test:e2e:regression": "cypress run --browser edge --headed --spec \"cypress/e2e/features/**/*.feature\" --env tags=\"@regression\",TAGS=\"@regression\"",
+    "test:e2e:smoke:headless": "cypress run --browser edge --headless --config pageLoadTimeout=180000,video=false --spec \"cypress/e2e/features/**/*.feature\" --env tags=\"@smoke\",TAGS=\"@smoke\"",
+    "test:e2e:regression:headless": "cypress run --browser edge --headless --spec \"cypress/e2e/features/**/*.feature\" --env tags=\"@regression\",TAGS=\"@regression\"",
+    "test:e2e:ci": "npm run test:e2e:smoke:headless && npm run test:e2e:regression:headless"
+  },
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^26.0.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
+    "cypress": "^15.17.0",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "esbuild": "^0.28.1",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.1.1",
+    "mochawesome-report-generator": "^6.3.2"
+  }
+}

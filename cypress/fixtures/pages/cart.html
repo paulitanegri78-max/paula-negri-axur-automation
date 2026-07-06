@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Amazon Mock - Cart</title>
+</head>
+<body>
+  <main>
+    <h1>Carrinho</h1>
+    <div id="cart-badge">0</div>
+    <div id="cart-items"></div>
+    <div id="cart-subtotal">R$ 0,00</div>
+  </main>
+  <script>
+    const cart = JSON.parse(localStorage.getItem('mock_cart') || '[]')
+    document.getElementById('cart-badge').innerText = cart.length
+    const itemsContainer = document.getElementById('cart-items')
+    let subtotal = 0
+    cart.forEach(item => {
+      const div = document.createElement('div')
+      div.className = 'cart-item'
+      div.innerText = item.name + ' - R$ ' + item.price.toFixed(2)
+      itemsContainer.appendChild(div)
+      subtotal += item.price * (item.quantity || 1)
+    })
+    document.getElementById('cart-subtotal').innerText = 'R$ ' + subtotal.toFixed(2)
+  </script>
+</body>
+</html>

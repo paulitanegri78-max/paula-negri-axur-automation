@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Amazon Mock - Product</title>
+</head>
+<body>
+  <main>
+    <h1>Huggies Fralda Premium Natural Care M 32 Un</h1>
+    <div class="a-price">
+      <span class="a-offscreen">R$ 49,90</span>
+    </div>
+    <button id="add-to-cart-button">Adicionar ao carrinho</button>
+  </main>
+  <script>
+    document.getElementById('add-to-cart-button').addEventListener('click', function(){
+      // Simula adicionar ao carrinho
+      const product = { name: 'Huggies Fralda Premium Natural Care M 32 Un', price: 49.90, quantity: 1 }
+      localStorage.setItem('mock_cart', JSON.stringify([product]))
+      window.location.href = 'cart.html'
+    })
+  </script>
+</body>
+</html>
