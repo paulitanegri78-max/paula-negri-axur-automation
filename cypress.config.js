@@ -1,4 +1,6 @@
 const { defineConfig } = require("cypress");
+const fs = require("fs");
+const path = require("path");
 const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
 const {
   addCucumberPreprocessorPlugin,
@@ -29,9 +31,35 @@ async function setupNodeEvents(on, config) {
   return config;
 }
 
+function readBaseUrlFromEnvFile() {
+  try {
+    const envPath = path.resolve(__dirname, ".env");
+    if (!fs.existsSync(envPath)) {
+      return null;
+    }
+
+    const envContent = fs.readFileSync(envPath, "utf8");
+    const line = envContent
+      .split(/\r?\n/)
+      .map((l) => l.trim())
+      .find((l) => l && !l.startsWith("#") && l.startsWith("BASE_URL="));
+
+    if (!line) {
+      return null;
+    }
+
+    const value = line.substring("BASE_URL=".length).trim();
+    return value || null;
+  } catch {
+    return null;
+  }
+}
+
+const resolvedBaseUrl = process.env.BASE_URL || readBaseUrlFromEnvFile() || "https://www.amazon.com.br";
+
 module.exports = defineConfig({
   e2e: {
-    baseUrl: "https://www.amazon.com.br",
+    baseUrl: resolvedBaseUrl,
     specPattern: "cypress/e2e/features/**/*.feature",
     supportFile: "cypress/support/e2e.js",
     defaultCommandTimeout: 10000,

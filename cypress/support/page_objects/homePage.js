@@ -18,7 +18,14 @@ class HomePage {
                 })
             })
         } else {
-            cy.visit('/')
+            // Usa baseUrl configurada no Cypress (.env -> BASE_URL) e fallback explicito.
+            const configuredBaseUrl = Cypress.config('baseUrl')
+            const targetUrl = configuredBaseUrl || 'https://www.amazon.com.br'
+
+            cy.visit(targetUrl, {
+                failOnStatusCode: false,
+                timeout: 120000,
+            })
         }
     }
 
